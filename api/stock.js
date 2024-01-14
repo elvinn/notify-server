@@ -1,4 +1,4 @@
-import process from 'node:process';
+import process, {exit} from 'node:process';
 import {stocks} from 'stock-api';
 import got from 'got';
 // eslint-disable-next-line import/no-unassigned-import
@@ -38,6 +38,11 @@ const stockList = [
 ];
 
 const BARK_KEY = process.env.BARK_KEY;
+if (!BARK_KEY) {
+  console.error('缺少 BARK_KEY 环境变量');
+  exit(-1);
+}
+
 export default async function handler(request, response) {
   for (const stockId of stockList) {
     // eslint-disable-next-line no-await-in-loop
