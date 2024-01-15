@@ -1,3 +1,4 @@
+import esMain from 'es-main';
 import {stocks} from 'stock-api';
 // eslint-disable-next-line import/no-unassigned-import
 import 'dotenv/config';
@@ -39,16 +40,15 @@ async function getStockInfo(stockId) {
   };
 }
 
-export default async function handler(request, response) {
+export default async function notifyStock() {
   for (const stockId of stockList) {
     // eslint-disable-next-line no-await-in-loop
     const stockInfo = await getStockInfo(stockId);
     // eslint-disable-next-line no-await-in-loop
     await notify(stockInfo);
   }
+}
 
-  response.status(200).json({
-    body: '发送成功',
-    query: request.query,
-  });
+if (esMain(import.meta)) {
+  await notifyStock();
 }

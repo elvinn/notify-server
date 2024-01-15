@@ -22,6 +22,10 @@ function checkProcessEnv() {
     if (processEnv[env] === undefined) {
       throw new Error(`process.env.${env} is undefined`);
     }
+
+    if (processEnv[env] === '') {
+      throw new Error(`process.env.${env} is empty string`);
+    }
   }
 }
 
