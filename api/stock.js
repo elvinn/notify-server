@@ -1,16 +1,24 @@
-import process, {exit} from 'node:process';
 import {stocks} from 'stock-api';
-import got from 'got';
 // eslint-disable-next-line import/no-unassigned-import
 import 'dotenv/config';
+import {checkProcessEnv, formatPercent, notify} from '../util/index.js';
 
 const ICON = 'https://gtimg.wechatpay.cn/resource/wxpay_oversea/2024-01-14/1705223028_1705223027981.png';
 const GROUP = '股票详情';
 
-function formatPercent(number) {
-  return `${(number * 100).toFixed(2)}%`;
-}
+// 需要关注的股票列表
+const stockList = [
+  'SH000001', // 上证指数
+  'SH000300', // 沪深 300
+  'HK00700', // 腾讯
+];
 
+checkProcessEnv();
+
+/**
+ * 获取股票信息
+ * @param {string} stockId 股票代码
+ */
 async function getStockInfo(stockId) {
   const {
     name,
@@ -31,24 +39,12 @@ async function getStockInfo(stockId) {
   };
 }
 
-const stockList = [
-  'SH000001',
-  'SH000300',
-  'HK00700',
-];
-
-const BARK_KEY = process.env.BARK_KEY;
-if (!BARK_KEY) {
-  console.error('缺少 BARK_KEY 环境变量');
-  exit(-1);
-}
-
 export default async function handler(request, response) {
   for (const stockId of stockList) {
     // eslint-disable-next-line no-await-in-loop
     const stockInfo = await getStockInfo(stockId);
     // eslint-disable-next-line no-await-in-loop
-    await got.post(`https://api.day.app/${BARK_KEY}`, {json: stockInfo}).json();
+    await notify(stockInfo);
   }
 
   response.status(200).json({
