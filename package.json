@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "lint": "xo --fix",
-    "test": "xo"
+    "lint": "standard --fix",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "elvinpeng",
@@ -18,9 +18,7 @@
     "stock-api": "^2.0.5"
   },
   "devDependencies": {
-    "xo": "^0.56.0"
-  },
-  "xo": {
-    "space": true
+    "standard": "^17.1.0",
+    "husky": "^8.0.0"
   }
 }

@@ -1,8 +1,7 @@
 {
-  "editor.formatOnSave": true,
-  "xo.enable": true,
-  "xo.format.enable": true,
-  "[javascript]": {
-    "editor.defaultFormatter": "samverschueren.linter-xo"
+  "editor.formatOnSave": false, // 避免和 standard 冲突
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
   },
+  "editor.defaultFormatter": "standard.vscode-standard"
 }
