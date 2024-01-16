@@ -1,8 +1,8 @@
 name: 查询股票信息
 on:
   schedule:
-    - cron: "0 9 * * 1-5"
-    - cron: "0 2 * * 1-5"
+    - cron: "50 8 * * 1-5"
+    - cron: "52 2 * * 1-5"
 jobs:
   notify:
     runs-on: ubuntu-latest
